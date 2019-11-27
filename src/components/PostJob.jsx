@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import Form from "react-jsonschema-form";
 
 class PostJob extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = { 
+      complete: false,
+      error: false, 
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -15,11 +19,18 @@ class PostJob extends React.Component {
         'Content-Type': 'application/json'
       },
       "body": JSON.stringify(data)
-    }).then(e => e.json()).then(e => console.log(e));
-    this.props.history.push('/payment')
+    }).then((response) => {
+      if(!response.ok) this.setState({ error: true });
+      else {
+        this.setState({ complete: true });
+      }
+    });
+    // this.props.history.push('/payment')  // Include if need payment information
   }
 
   render() {
+    if (this.state.complete) return <h3>Thank you! We have received your post, and we will notify you if it's approved.</h3>;
+    else if (this.state.error) return <h3>Sorry, there seems to be an error. Please contact coo@stanforddaily.com for help.</h3>;
     let schema = {
       "title": "Create your listing",
       "type": "object",

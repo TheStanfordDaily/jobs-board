@@ -13,11 +13,15 @@ class JobDetails extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      items: [],
+      items: this.props.jobs.filter(job => { // locate details of job with matching ID
+        return job.id === this.props.match.params.id
+      })[0]
     };
   }
 
   componentDidMount() {
+    console.log(this.state.items);
+    /* pulls jobs from GitHub Jobs API
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
       targetUrl = 'https://jobs.github.com/positions/' + this.props.match.params.id + '.json?markdown=true';
     fetch(proxyUrl + targetUrl)
@@ -35,22 +39,18 @@ class JobDetails extends React.Component {
           });
         }
       ) 
+      */
   }
 
   render() {
-    const { error, isLoaded } = this.state;
     var showitems = this.state.items;
-    console.log(showitems);
-    if (error) {
-      return <div>Error!</div>;
-    } else if (!isLoaded) {
-      return <div>Loading...</div>;
-    } else {
+    console.log("items " + showitems);
+
     return (
       <div className="jobDetails">
         <div className="mainContent">
           <div className="companyLogo">
-            <img src={this.state.items.company_logo} alt="" />
+            <img src={this.state.items.logo} alt="" />
           </div>
           <p className="jobTitle">{this.state.items.title}</p>
           <div className="jobFacts">
@@ -70,8 +70,8 @@ class JobDetails extends React.Component {
                 {this.state.items.type}
             </p>
               <p>
-                <img src={briefcaseIcon} alt="" />
-                Technology
+                <img src={briefcaseIcon} alt="" className="briefcaseIcon"/>
+                {this.state.items.industry}
             </p>
             </div>
             <div className="clear"></div>
@@ -81,14 +81,13 @@ class JobDetails extends React.Component {
         <div className="sideBar">
           <div className="greenBackground">
             <h1>How to apply</h1>
-            <p><Linkify>{this.state.items.how_to_apply}</Linkify></p>
+            <p><Linkify>{ReactHtmlParser(this.state.items.how_to_apply)}</Linkify></p>
           </div>
         </div>
         <div className="clear"></div>
       </div>
     )
   }
-}
 }
 
 export default JobDetails;
