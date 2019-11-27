@@ -6,7 +6,7 @@
     --main-black: #303030;
     --main-red: #FF5A60;
     --main-green: #11BF9F;
-    --main-gray: #5e5e5e;
+    --main-gray: #777777;
     --main-outline: #DADADA;
     --light-outline: #E8E8E8;
     --light-background: #F4F4F4;
@@ -173,7 +173,7 @@ header .btnTertiary {
     font-size: 18px;
     margin-bottom: 14px;
 }
-.mini .lightTitle {
+.lightTitle {
     margin-top: 14px;
     color: var(--main-gray);
 }
@@ -297,6 +297,9 @@ header .btnTertiary {
 .sideBar p {
     line-height: 22px;
     margin-bottom: 24px;
+}
+.mobile.sideBar {
+    display: none;
 }
 
 
@@ -455,11 +458,14 @@ legend { /* remove indent of react json form */
     .hero {
         display: none;
     }
-    .sideBar {
+    .desktop.sideBar {
+        display: none;
+    }
+    .mobile.sideBar, .jobDetails .sideBar {
         display: inline-block;
         width: 100%;
         float: none;
-        padding: 0;
+        padding: 0 0 24px 0;
         margin: 0;
     }
     .greenBackground {

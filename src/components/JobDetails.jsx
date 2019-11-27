@@ -43,7 +43,6 @@ class JobDetails extends React.Component {
   }
 
   render() {
-    const { error, isLoaded } = this.state;
     var showitems = this.state.items;
     console.log("items " + showitems);
 
@@ -51,7 +50,7 @@ class JobDetails extends React.Component {
       <div className="jobDetails">
         <div className="mainContent">
           <div className="companyLogo">
-            <img src={this.state.items.company_logo} alt="" />
+            <img src={this.state.items.logo} alt="" />
           </div>
           <p className="jobTitle">{this.state.items.title}</p>
           <div className="jobFacts">
@@ -72,7 +71,7 @@ class JobDetails extends React.Component {
             </p>
               <p>
                 <img src={briefcaseIcon} alt="" className="briefcaseIcon"/>
-                Technology
+                {this.state.items.industry}
             </p>
             </div>
             <div className="clear"></div>
