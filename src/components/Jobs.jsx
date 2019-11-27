@@ -31,8 +31,8 @@ class Jobs extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      items: [],
-      filteredItems: [],
+      items: this.props.jobs,
+      filteredItems: this.props.jobs,
       locationFilter: []
     };
     this.handleChange = this.handleChange.bind(this)
@@ -61,6 +61,8 @@ class Jobs extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props.filteredItems)
+    /*
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
       targetUrl = 'https://jobs.github.com/positions.json?utf8=%E2%9C%93&description=&location=california'
     fetch(proxyUrl + targetUrl)
@@ -71,6 +73,7 @@ class Jobs extends React.Component {
           items: result,
           filteredItems: result,
         });
+        console.log(this.state.filteredItems);
       },
         (error) => {
           this.setState({
@@ -79,6 +82,7 @@ class Jobs extends React.Component {
           });
         }
       )
+      */
   }
 
   searchKey = (event) => {
@@ -113,11 +117,6 @@ class Jobs extends React.Component {
       locationOptions.push({ "value": unique[i], "label": unique[i] });
     }
 
-    if (error) {
-      return <div>Error!</div>;
-    } else if (!isLoaded) {
-      return <div></div>;
-    } else {
       return (
         <div>
           {/*
@@ -186,13 +185,13 @@ class Jobs extends React.Component {
             <ul id="jobList" className="list">
               {this.state.filteredItems.map(job => <JobCard
                 title={job.title}
-                logo={job.company_logo}
+                logo={job.logo}
                 company={job.company}
                 location={job.location}
                 excerpt={job.description}
-                pay={job.type}
+                type={job.type}
                 id={job.id}   // CHANGE LATER !
-              //type={job.type} !
+                //type={job.type}
               />
               )}
             </ul>
@@ -200,15 +199,14 @@ class Jobs extends React.Component {
           <div className="sideBar">
           <div className="greenBackground">
             <h1>What's this?</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. 
-            </p>
+            <p>Job Tree connects Stanford students directly to opportunities at companies and organizations. There's no online application here: we'll give you contact information and you can start talking to real employees and recruiters right away.</p>
             </div>
           </div>
           <div className="clear"></div>
         </div>);
     }
   }
-}
+
 
 function JobCard(props) {
   var excerpt = props.excerpt.replace(/<\/?[^>]+(>|$)/g, ""); // strip description excerpt of HTML tags
@@ -231,7 +229,7 @@ function JobCard(props) {
             </span>
             <span>
               <img className="icon" src={dollarIcon} alt="" />
-              {props.pay}
+              {props.type}
             </span>
           </div>
           <div className="jobExcerpt">

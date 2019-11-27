@@ -13,7 +13,7 @@ class Advice extends React.Component {
 
   componentDidMount() {
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-      targetUrl = 'https://www.stanforddaily.com/wp-json/wp/v2/posts?_embed&tags=16534,8248,24207,406,318&per_page=50' // embed adds featured image
+      targetUrl = 'https://wp.stanforddaily.com/wp-json/wp/v2/posts?_embed&tags=16534,8248,24207,406,318&per_page=50' // embed adds featured image
     fetch(proxyUrl + targetUrl)
       .then(blob => blob.json())
       .then(result => {
