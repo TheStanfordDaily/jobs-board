@@ -75,17 +75,6 @@ const jobs = [
     company_url: "http://creative-integration.com",
     how_to_apply: "<p><a href=\"mailto:career@creative-integration.com\">career@creative-integration.com</a></p>\n"
   },
-  /*
-  {
-    title: "",
-    logo: "",
-    company: "",
-    location: "",
-    excerpt: "",
-    pay: "",
-    id: "",
-    type: "",
-  }*/
 ]
 
 export default App;
