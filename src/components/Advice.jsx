@@ -70,10 +70,6 @@ class Advice extends React.Component {
               )}
             </ul>
           </div>
-          <div className="sideBar">
-            <p>Tell us what you’re looking for and we’ll notify you of new jobs!</p>
-            <a href="#" class="btnPrimary">Get alerts</a>
-          </div>
           <div className="clear"></div>
         </div>);
     }
