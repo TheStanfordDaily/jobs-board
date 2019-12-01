@@ -490,6 +490,12 @@ legend { /* remove indent of react json form */
 @media only screen and (max-width: 768px){
     .mainContent {
     }
+    nav ul {
+        float: left;
+    }
+    nav ul li {
+        line-height: 16px;
+    }
     .wrapper {
         width: 90%;
         padding: 0 5%;
@@ -501,6 +507,10 @@ legend { /* remove indent of react json form */
         padding-left: 16px;
         margin: auto 0 auto 0;
         object-fit: cover;
+    }
+    .leftCol, .rightCol {
+        float: left;
+        width: 100%;
     }
     textarea, select, .postJob input, .__PrivateStripeElement {
         width: 100%;
