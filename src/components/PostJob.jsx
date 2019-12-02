@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import Form from "react-jsonschema-form";
 
 class PostJob extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = { 
+      complete: false,
+      error: false, 
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -15,11 +19,18 @@ class PostJob extends React.Component {
         'Content-Type': 'application/json'
       },
       "body": JSON.stringify(data)
-    }).then(e => e.json()).then(e => console.log(e));
-    this.props.history.push('/payment')
+    }).then((response) => {
+      if(!response.ok) this.setState({ error: true });
+      else {
+        this.setState({ complete: true });
+      }
+    });
+    // this.props.history.push('/payment')  // Include if need payment information
   }
 
   render() {
+    if (this.state.complete) return <h3>Thank you! We have received your post, and we will notify you if it's approved.</h3>;
+    else if (this.state.error) return <h3>Sorry, there seems to be an error. Please contact coo@stanforddaily.com for help.</h3>;
     let schema = {
       "title": "Create your listing",
       "type": "object",
@@ -35,17 +46,17 @@ class PostJob extends React.Component {
         "jobTitle": {
           "type": "string",
           "title": "Job title",
-          "default": "Engineer"
+          //"default": "Engineer" // Defaults used for testing
         },
         "companyName": {
           "type": "string",
           "title": "Company name",
-          "default": "Google"
+          //"default": "Google"
         },
         "companySite": {
           "type": "string",
           "title": "Company website link",
-          "default": "google.com"
+          //"default": "google.com"
         },
         "companyLogo": {
           "type": "string",
@@ -55,13 +66,13 @@ class PostJob extends React.Component {
         "jobLocation": {
           "type": "string",
           "title": "Location",
-          "default": "San Francisco, CA"
+          //"default": "San Francisco, CA"
         },
         "jobType": {
           "type": "string",
           "title": "Type of role",
           "enum": ["Internship", "Full-time", "Part-time", "On-campus"],
-          "default": "Internship"
+          //"default": "Internship"
         },
         /*
         "pay": {
@@ -73,7 +84,7 @@ class PostJob extends React.Component {
         "jobDescription": {
           "type": "string",
           "title": "Job description",
-          "default": "Make things"
+          //"default": "Make things"
         },
         /*
         "schoolYear": {
@@ -97,7 +108,7 @@ class PostJob extends React.Component {
         "appInstructions": {
           "type": "string",
           "title": "Instructions for applying (must include email for applicants to contact)",
-          "default": "Send resume"
+          //"default": "Send resume"
         },
         /*
         "jobDeadline": {

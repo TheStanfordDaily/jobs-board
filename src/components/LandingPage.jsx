@@ -14,13 +14,14 @@ export default class LandingPage extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      items: [],
+      items: this.props.jobs,
       articles: []
     };
   }
 
 
   componentDidMount() {
+    /* Pulls jobs from GitHub Jobs API
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
       targetUrl = 'https://jobs.github.com/positions.json?utf8=%E2%9C%93&description=&location=california'
     fetch(proxyUrl + targetUrl)
@@ -38,8 +39,9 @@ export default class LandingPage extends React.Component {
           });
         }
       )
+    */
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-      targetUrl = 'https://www.stanforddaily.com/wp-json/wp/v2/posts?_embed&tags=16534,8248,24207,406,318&per_page=3' // embed adds featured image
+      targetUrl = 'https://wp.stanforddaily.com/wp-json/wp/v2/posts?_embed&tags=16534,8248,24207,406,318&per_page=3' // embed adds featured image
     fetch(proxyUrl + targetUrl)
       .then(blob => blob.json())
       .then(result => {
