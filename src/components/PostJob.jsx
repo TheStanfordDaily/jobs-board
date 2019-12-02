@@ -46,17 +46,17 @@ class PostJob extends React.Component {
         "jobTitle": {
           "type": "string",
           "title": "Job title",
-          "default": "Engineer"
+          //"default": "Engineer" // Defaults used for testing
         },
         "companyName": {
           "type": "string",
           "title": "Company name",
-          "default": "Google"
+          //"default": "Google"
         },
         "companySite": {
           "type": "string",
           "title": "Company website link",
-          "default": "google.com"
+          //"default": "google.com"
         },
         "companyLogo": {
           "type": "string",
@@ -66,13 +66,13 @@ class PostJob extends React.Component {
         "jobLocation": {
           "type": "string",
           "title": "Location",
-          "default": "San Francisco, CA"
+          //"default": "San Francisco, CA"
         },
         "jobType": {
           "type": "string",
           "title": "Type of role",
           "enum": ["Internship", "Full-time", "Part-time", "On-campus"],
-          "default": "Internship"
+          //"default": "Internship"
         },
         /*
         "pay": {
@@ -84,7 +84,7 @@ class PostJob extends React.Component {
         "jobDescription": {
           "type": "string",
           "title": "Job description",
-          "default": "Make things"
+          //"default": "Make things"
         },
         /*
         "schoolYear": {
@@ -108,7 +108,7 @@ class PostJob extends React.Component {
         "appInstructions": {
           "type": "string",
           "title": "Instructions for applying (must include email for applicants to contact)",
-          "default": "Send resume"
+          //"default": "Send resume"
         },
         /*
         "jobDeadline": {
