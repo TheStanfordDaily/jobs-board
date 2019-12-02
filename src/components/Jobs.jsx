@@ -8,17 +8,10 @@ import Select from 'react-select';
 import { Link } from "react-router-dom";
 
 const typeOptions = [
-  { value: 'internship', label: 'Internship' },
-  { value: 'fullTime', label: 'Full-time' },
-  { value: 'partTime', label: 'Part-time' },
-  { value: 'onCampus', label: 'On-campus' },
-];
-
-const industryOptions = [
-  { value: 'art', label: 'Art' },
-  { value: 'business', label: 'Business' },
-  { value: 'finance', label: 'Finance' },
-  { value: 'health', label: 'Health' },
+  { value: 'Internship', label: 'Internship' },
+  { value: 'Full-time', label: 'Full-time' },
+  { value: 'Part-time', label: 'Part-time' },
+  { value: 'On-campus', label: 'On-campus' },
 ];
 
 class Jobs extends React.Component {
@@ -31,15 +24,13 @@ class Jobs extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      items: [],
-      filteredItems: [],
-      locationFilter: []
+      items: this.props.jobs,
+      filteredItems: this.props.jobs,
     };
     this.handleChange = this.handleChange.bind(this)
   }
 
   handleChange(val) {
-    console.log("change")
     var filteredItems = [];
     if (!val) { // if an element is unselected (small X), so the value is null...
       filteredItems = this.state.items;
@@ -51,16 +42,18 @@ class Jobs extends React.Component {
     else { // else if an element is selected...
       var i;
       for (i = 0; i < val.length; i++) {
-        this.setState({ locationFilter: [...this.state.locationFilter, val[i].value] })
         filteredItems = filteredItems.concat(this.state.items.filter(function (item) {  // only show items equal to the value passed in
-          return item["location"] === val[i].value;
+          return (item["location"] === val[i].value) || (item["type"].toLowerCase() === val[i].value.toLowerCase())
+            || (item["industry"].toLowerCase() === val[i].value.toLowerCase());
         }));
       }
-    } 
+    }
     this.setState({ filteredItems: filteredItems });
   }
 
   componentDidMount() {
+    console.log(this.props.filteredItems)
+    /*
     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
       targetUrl = 'https://jobs.github.com/positions.json?utf8=%E2%9C%93&description=&location=california'
     fetch(proxyUrl + targetUrl)
@@ -71,6 +64,7 @@ class Jobs extends React.Component {
           items: result,
           filteredItems: result,
         });
+        console.log(this.state.filteredItems);
       },
         (error) => {
           this.setState({
@@ -79,6 +73,7 @@ class Jobs extends React.Component {
           });
         }
       )
+      */
   }
 
   searchKey = (event) => {
@@ -105,22 +100,22 @@ class Jobs extends React.Component {
   }
 
   render() {
-    const { error, isLoaded } = this.state;
     const { selectedOption } = this.state;
-    const unique = [...new Set(this.state.items.map(item => item.location))].sort(); //creates array of unique locations
+    const uniqueLocations = [...new Set(this.state.items.map(item => item.location))].sort(); // creates array of unique locations
     var locationOptions = [];
-    for (var i = 0; i < unique.length; i++) {  // adds array to object for select options
-      locationOptions.push({ "value": unique[i], "label": unique[i] });
+    for (var i = 0; i < uniqueLocations.length; i++) {  // adds array to object for select options
+      locationOptions.push({ "value": uniqueLocations[i], "label": uniqueLocations[i] });
     }
 
-    if (error) {
-      return <div>Error!</div>;
-    } else if (!isLoaded) {
-      return <div></div>;
-    } else {
-      return (
-        <div>
-          {/*
+    const uniqueIndustries = [...new Set(this.state.items.map(item => item.industry))].sort(); // creates array of unique locations
+    var industryOptions = [];
+    for (var i = 0; i < uniqueIndustries.length; i++) {  // adds array to object for select options
+      industryOptions.push({ "value": uniqueIndustries[i], "label": uniqueIndustries[i] });
+    }
+
+    return (
+      <div>
+        {/*
           <header>
             <img className="hero" src={heroImage} alt="" height="375px" />
             <h1>Find your dream job and contact recruiters right away.</h1>
@@ -128,17 +123,39 @@ class Jobs extends React.Component {
             <a href="#" className="btnTertiary">Get alerts</a> 
           </header>
           */}
-          <div id="jobsAnchor" className="mainContent">
-            <div className="jobFilters">
-              <input type="search" id="searchInput" onKeyUp={this.searchKey} placeholder="Search by title, description, company, etc." name="search" />
-              <label className="inline marginRight">Job types</label>
-              <label className="inline marginRight">Industries</label>
-              <label className="inline">Locations</label>
-              <span className="inline marginRight"><Select
+                <div className="sideBar mobile">
+          <div className="greenBackground">
+            <h1>What's this?</h1>
+            <p>Job Tree connects Stanford students directly to opportunities at companies and organizations. There's no online application here: we'll give you contact information and you can start talking to real employees and recruiters right away.</p>
+          </div>
+        </div>
+        <div id="jobsAnchor" className="mainContent">
+          <div className="jobFilters">
+            <input type="search" id="searchInput" onKeyUp={this.searchKey} placeholder="Search by title, description, company, etc." name="search" />
+            <label className="inline marginRight">Job types</label>
+            <label className="inline marginRight">Industries</label>
+            <label className="inline">Locations</label>
+            <span className="inline marginRight"><Select
+              value={selectedOption} isMulti
+              placeholder={'All types'}
+              onChange={this.handleChange}
+              options={typeOptions}
+              theme={theme => ({
+                ...theme,
+                colors: {
+                  ...theme.colors,
+                  primary25: '#9FE5D8',
+                  primary: '#11BF9F',
+                },
+              })}
+            />
+            </span>
+            <span className="inline marginRight">
+              <Select
                 value={selectedOption} isMulti
-                placeholder={'All types'}
+                placeholder={'All industries'}
                 onChange={this.handleChange}
-                options={typeOptions}
+                options={industryOptions}
                 theme={theme => ({
                   ...theme,
                   colors: {
@@ -148,67 +165,49 @@ class Jobs extends React.Component {
                   },
                 })}
               />
-              </span>
-              <span className="inline marginRight">
-                <Select
-                  value={selectedOption} isMulti
-                  placeholder={'All industries'}
-                  onChange={this.handleChange}
-                  options={industryOptions}
-                  theme={theme => ({
-                    ...theme,
-                    colors: {
-                      ...theme.colors,
-                      primary25: '#9FE5D8',
-                      primary: '#11BF9F',
-                    },
-                  })}
-                />
-              </span>
-              <span className="inline">
-                <Select
-                  value={selectedOption} isMulti
-                  placeholder={'All locations'}
-                  onChange={this.handleChange}
-                  options={locationOptions}
-                  theme={theme => ({
-                    ...theme,
-                    colors: {
-                      ...theme.colors,
-                      primary25: '#9FE5D8',
-                      primary: '#11BF9F',
-                    },
-                  })}
-                />
-                <div>{this.state.filter}</div>
-              </span>
-            </div>
-            <ul id="jobList" className="list">
-              {this.state.filteredItems.map(job => <JobCard
-                title={job.title}
-                logo={job.company_logo}
-                company={job.company}
-                location={job.location}
-                excerpt={job.description}
-                pay={job.type}
-                id={job.id}   // CHANGE LATER !
-              //type={job.type} !
+            </span>
+            <span className="inline">
+              <Select
+                value={selectedOption} isMulti
+                placeholder={'All locations'}
+                onChange={this.handleChange}
+                options={locationOptions}
+                theme={theme => ({
+                  ...theme,
+                  colors: {
+                    ...theme.colors,
+                    primary25: '#9FE5D8',
+                    primary: '#11BF9F',
+                  },
+                })}
               />
-              )}
-            </ul>
+              <div>{this.state.filter}</div>
+            </span>
           </div>
-          <div className="sideBar">
+          <div className="lightTitle">{this.state.filteredItems.length} jobs found</div>
+          <ul id="jobList" className="list">
+            {this.state.filteredItems.map(job => <JobCard
+              title={job.title}
+              logo={job.logo}
+              company={job.company}
+              location={job.location}
+              excerpt={job.description}
+              type={job.type}
+              id={job.id} />
+              )}
+          </ul>
+        </div>
+        <div className="sideBar desktop">
           <div className="greenBackground">
             <h1>What's this?</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. 
-            </p>
-            </div>
+            <p>Job Tree connects Stanford students directly to opportunities at companies and organizations. There's no online application here: we'll give you contact information and you can start talking to real employees and recruiters right away.</p>
           </div>
-          <div className="clear"></div>
-        </div>);
-    }
+        </div>
+        <div className="clear"></div>
+      </div>);
   }
 }
+
 
 function JobCard(props) {
   var excerpt = props.excerpt.replace(/<\/?[^>]+(>|$)/g, ""); // strip description excerpt of HTML tags
@@ -231,7 +230,7 @@ function JobCard(props) {
             </span>
             <span>
               <img className="icon" src={dollarIcon} alt="" />
-              {props.pay}
+              {props.type}
             </span>
           </div>
           <div className="jobExcerpt">

@@ -1,12 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:regular,semibold,bold,italic&subset=latin,latin-ext');
-@import url('https://fonts.googleapis.com/css?family=Libre+Baskerville:regular,semibold,bold,italic&subset=latin,latin-ext');
 /* -----Global------*/
 
 :root {
     --main-black: #303030;
     --main-red: #FF5A60;
     --main-green: #11BF9F;
-    --main-gray: #777777;
+    --main-gray: #8A8A8A;
     --main-outline: #DADADA;
     --light-outline: #E8E8E8;
     --light-background: #F4F4F4;
@@ -103,7 +102,6 @@ nav a {
 nav ul {
     float: right;
     list-style: none;
-    padding-left: 0;
 }
 nav ul li {
     display: inline-block;
@@ -153,7 +151,7 @@ header .btnTertiary {
 }
 .mini {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     justify-content: space-between;
 }
 .mini a {
@@ -173,7 +171,7 @@ header .btnTertiary {
     font-size: 18px;
     margin-bottom: 14px;
 }
-.lightTitle {
+.mini .lightTitle {
     margin-top: 14px;
     color: var(--main-gray);
 }
@@ -298,9 +296,6 @@ header .btnTertiary {
     line-height: 22px;
     margin-bottom: 24px;
 }
-.mobile.sideBar {
-    display: none;
-}
 
 
 
@@ -318,10 +313,6 @@ header .btnTertiary {
     margin-left: 8px;
     border-radius: 3px;
     float: right;
-}
-.briefcaseIcon {
-    padding-left: 2px;
-    padding-right: 3px;
 }
 .jobDetails a {
     font-weight: 600;
@@ -351,9 +342,6 @@ header .btnTertiary {
 }
 .greenBackground a {
     color: black;
-}
-.greenBackground p {
-    margin-bottom: 0;
 }
 .jobDetails .sideBar p {
     margin-bottom: 0;
@@ -458,29 +446,15 @@ legend { /* remove indent of react json form */
     .hero {
         display: none;
     }
-    .desktop.sideBar {
-        display: none;
-    }
-    .mobile.sideBar, .jobDetails .sideBar {
+    .sideBar {
         display: inline-block;
         width: 100%;
         float: none;
-        padding: 0 0 24px 0;
+        padding: 0;
         margin: 0;
     }
     .greenBackground {
         margin-top: 16px;
-    }
-    .mini a {
-        width: 100%;
-        margin-top: 8px;
-    }
-    .column {
-        float: none;
-        width: 100%;
-    }
-    .secondHeader .right {
-        margin-left: 0px;
     }
     textarea, select, .postJob input, .__PrivateStripeElement {
         width: 70%;
@@ -489,12 +463,6 @@ legend { /* remove indent of react json form */
 }
 @media only screen and (max-width: 768px){
     .mainContent {
-    }
-    nav ul {
-        float: left;
-    }
-    nav ul li {
-        line-height: 16px;
     }
     .wrapper {
         width: 90%;
@@ -507,10 +475,6 @@ legend { /* remove indent of react json form */
         padding-left: 16px;
         margin: auto 0 auto 0;
         object-fit: cover;
-    }
-    .leftCol, .rightCol {
-        float: left;
-        width: 100%;
     }
     textarea, select, .postJob input, .__PrivateStripeElement {
         width: 100%;
