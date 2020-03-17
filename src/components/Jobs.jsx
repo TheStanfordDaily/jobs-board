@@ -1,6 +1,5 @@
 import React from 'react';
 import './styles.css';
-import heroImage from './heroImage.svg';
 import locationIcon from './locationIcon.png';
 import buildingIcon from './buildingIcon.png';
 import dollarIcon from './dollarIcon.png';
@@ -41,11 +40,12 @@ class Jobs extends React.Component {
     }
     else { // else if an element is selected...
       var i;
+      const filterFn = (item) => {  // only show items equal to the value passed in
+        return (item["location"] === val[i].value) || (item["type"].toLowerCase() === val[i].value.toLowerCase())
+          || (item["industry"].toLowerCase() === val[i].value.toLowerCase());
+      };
       for (i = 0; i < val.length; i++) {
-        filteredItems = filteredItems.concat(this.state.items.filter(function (item) {  // only show items equal to the value passed in
-          return (item["location"] === val[i].value) || (item["type"].toLowerCase() === val[i].value.toLowerCase())
-            || (item["industry"].toLowerCase() === val[i].value.toLowerCase());
-        }));
+        filteredItems = filteredItems.concat(this.state.items.filter(filterFn));
       }
     }
     this.setState({ filteredItems: filteredItems });
@@ -103,13 +103,13 @@ class Jobs extends React.Component {
     const { selectedOption } = this.state;
     const uniqueLocations = [...new Set(this.state.items.map(item => item.location))].sort(); // creates array of unique locations
     var locationOptions = [];
-    for (var i = 0; i < uniqueLocations.length; i++) {  // adds array to object for select options
+    for (let i = 0; i < uniqueLocations.length; i++) {  // adds array to object for select options
       locationOptions.push({ "value": uniqueLocations[i], "label": uniqueLocations[i] });
     }
 
     const uniqueIndustries = [...new Set(this.state.items.map(item => item.industry))].sort(); // creates array of unique locations
     var industryOptions = [];
-    for (var i = 0; i < uniqueIndustries.length; i++) {  // adds array to object for select options
+    for (let i = 0; i < uniqueIndustries.length; i++) {  // adds array to object for select options
       industryOptions.push({ "value": uniqueIndustries[i], "label": uniqueIndustries[i] });
     }
 

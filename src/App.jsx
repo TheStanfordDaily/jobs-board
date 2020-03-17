@@ -1,6 +1,6 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './index.css';
-import { Switch, HashRouter, Route } from "react-router-dom"; import { Elements, StripeProvider } from 'react-stripe-elements';
+import { Switch, HashRouter, Route } from "react-router-dom";
 
 import NavBar from './components/NavBar';
 import LandingPage from './components/LandingPage';

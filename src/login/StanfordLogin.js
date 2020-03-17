@@ -11,6 +11,7 @@ export default ( {children} ) => {
         <input type="hidden" name="scope" value="aws.cognito.signin.user.admin email openid phone profile" />
         <input type="hidden" name="identity_provider" value="Stanford" />
         {!children && <button type="submit" className={"btn btn-stanford"}>Sign in with Stanford</button>}
-        {children && <a onClick={() => ref.current.submit()}>{children}</a>}
+        { // eslint-disable-next-line jsx-a11y/anchor-is-valid
+        children && <a onClick={() => ref.current.submit()}>{children}</a>}
     </form>);
 }

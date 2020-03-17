@@ -34,7 +34,7 @@ class Advice extends React.Component {
     const { error, isLoaded } = this.state;
 
     function html_entity_decode(message) {
-      {/* decodes UTF8 punctuation into HTML */ }
+      // decodes UTF8 punctuation into HTML
       var element = document.createElement("div");
       element.innerHTML = message;
       return element.innerHTML;

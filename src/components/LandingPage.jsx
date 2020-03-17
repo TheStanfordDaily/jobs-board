@@ -61,7 +61,7 @@ export default class LandingPage extends React.Component {
 
   render() {
     function html_entity_decode(message) {
-      {/* decodes UTF8 punctuation into HTML */ }
+      // decodes UTF8 punctuation into HTML
       var element = document.createElement("div");
       element.innerHTML = message;
       return element.innerHTML;

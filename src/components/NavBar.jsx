@@ -10,7 +10,7 @@ function NavBar( {user} ) {
     <div>
         <nav>
           <Link to="/" className="logo">
-            <img src={logoImage} />
+            <img src={logoImage} alt="Stanford Daily Logo" />
             <ul>
               <li>
                 <div>Job Tree</div>
@@ -22,11 +22,11 @@ function NavBar( {user} ) {
             {/* <li><a href="/">Email alerts</a></li> */}
             <li><Link to="/advice">Student advice</Link></li>
             <li><Link to="/post" className="btnSecondary">Post a job</Link></li>
-            {!user &&
-              <li><StanfordLogin><a className="btnSecondary">Login with Stanford</a></StanfordLogin></li>
+            { // eslint-disable-next-line jsx-a11y/anchor-is-valid
+            !user && <li><StanfordLogin><a className="btnSecondary">Login with Stanford</a></StanfordLogin></li>
             }
-            {user && 
-              <li><a className="btnSecondary" onClick={() => logout()}>Logout</a></li>
+            { // eslint-disable-next-line jsx-a11y/anchor-is-valid
+            user && <li><a className="btnSecondary" onClick={() => logout()}>Logout</a></li>
             }
           </ul>
         </nav>

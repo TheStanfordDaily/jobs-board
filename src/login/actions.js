@@ -54,7 +54,7 @@ async function callTokenEndpoint(data) {
     // TODO: handle refresh tokens?
     // localStorage.setItem("refresh_token", response.refresh_token);
   } else {
-    throw "no response";
+    throw new Error("no response");
   }
 }
 
@@ -122,13 +122,13 @@ const getCurrentUser = async () => {
   }
 
   // If JWT from SAML has expired, or if there is no JWT in the first place, run this code.
-  throw "No current user";
+  throw new Error("No current user");
 }
 
 export async function checkLoginStatus() {
     try {
         const user = await getCurrentUser();
-        if (!user) throw "No credentials";
+        if (!user) throw new Error("No credentials");
         return user;
     } catch(e) {
         // TODO: Redirect.

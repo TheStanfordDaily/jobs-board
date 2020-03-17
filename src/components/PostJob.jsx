@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Form from "react-jsonschema-form";
 
 class PostJob extends React.Component {
@@ -133,8 +133,7 @@ class PostJob extends React.Component {
         "classNames": "upload"
       },
       "jobLocation": {
-        "ui:placeholder": "City, State",
-        "ui:placeholder": "Atlanta, GA"
+        "ui:placeholder": "City, State"
       },
       "jobType": {
         "ui:placeholder": "Choose one"
