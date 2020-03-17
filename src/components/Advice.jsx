@@ -90,9 +90,7 @@ function ArticleCard(props) {
             <div className="jobFacts">
               {props.author}
             </div>
-            <div className="jobExcerpt">
-              {props.excerpt}
-            </div>
+            <div className="jobExcerpt" dangerouslySetInnerHTML={{__html: purify(props.excerpt)}} />
           </div>
         </a>
       </li>

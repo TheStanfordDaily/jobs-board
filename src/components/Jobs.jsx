@@ -7,6 +7,7 @@ import Select from 'react-select';
 import Fuse from "fuse.js";
 import { Link } from "react-router-dom";
 import { getJobs } from '../api/actions';
+import { purify } from '../utils/purify';
 
 const typeOptions = [
   { value: 'Internship', label: 'Internship' },
@@ -235,9 +236,7 @@ function JobCard(props) {
               {props.type}
             </span>
           </div>
-          <div className="jobExcerpt">
-            {props.excerpt}
-          </div>
+          <div className="jobExcerpt"  dangerouslySetInnerHTML={{__html: purify(props.excerpt)}} />
         </Link>
       </li>
     </div>
