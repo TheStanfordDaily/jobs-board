@@ -80,14 +80,15 @@ class Jobs extends React.Component {
       maxPatternLength: 32,
       minMatchCharLength: 1,
       keys: [
-        "jobName",
+        "jobTitle",
         "jobDescription",
-        "jobCompany",
+        "companyName",
         "jobLocation"
       ]
     };
     const fuse = new Fuse(this.state.items, options);
-    const filteredItems = fuse.search(term);
+    const filteredItems = fuse.search(term).map(e => e.item);
+    console.log(filteredItems);
     this.setState({
       filteredItems
     });
