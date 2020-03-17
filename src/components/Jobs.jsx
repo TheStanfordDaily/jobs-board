@@ -89,7 +89,6 @@ class Jobs extends React.Component {
     };
     const fuse = new Fuse(this.state.items, options);
     const filteredItems = fuse.search(term).map(e => e.item);
-    console.log(filteredItems);
     this.setState({
       filteredItems
     });

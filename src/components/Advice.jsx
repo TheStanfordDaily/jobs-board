@@ -46,7 +46,6 @@ class Advice extends React.Component {
               {this.state.items.map(article => {
                 let featuredImage;
                 if (article._embedded['wp:featuredmedia']) {
-                  console.log("made it")
                   featuredImage = article._embedded['wp:featuredmedia'][0].source_url;
                 }
                 else {
@@ -73,7 +72,6 @@ class Advice extends React.Component {
 
 function ArticleCard(props) {
   let image;
-  console.log(props.image)
   if (props.image) {
     image = <img src={props.image} alt="" />;
   } else {

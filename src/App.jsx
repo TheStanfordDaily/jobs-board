@@ -21,9 +21,7 @@ const App = () => {
       await parseCodeFromQuery();
       const user = await checkLoginStatus();
       setUser(user);
-      console.log(user);
     })();
-    console.log("doing it");
   }, []);
   return (
     <div className="flexWrapper">

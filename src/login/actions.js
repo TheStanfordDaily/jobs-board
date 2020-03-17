@@ -112,7 +112,7 @@ const getCurrentUser = async () => {
       // TODO: add refresh token logic if we want here.
     }
     else {
-      console.log("parsed", parsed);
+      // console.log("parsed", parsed);
       let attributes = { "name": parsed["name"], "email": parsed["email"], "email_verified": parsed["email_verified"], "cognito:groups": parsed["cognito:groups"] };
       return await {
         "username": parsed["sub"],
