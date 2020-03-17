@@ -55,13 +55,13 @@ export default class LandingPage extends React.Component {
             {this.state.jobs.slice(0, 3).map(job =>
               <Link to={"/jobs/" + job.id}>
                 <div className="title">
-                  {job.title}
+                  {job.jobTitle}
                 </div>
                 <div>
-                  {job.company}
+                  {job.companyName}
                 </div>
                 <div className="lightTitle">
-                  {job.location}
+                  {job.jobLocation}
                 </div>
               </Link>
             )

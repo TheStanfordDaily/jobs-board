@@ -1,35 +1,31 @@
 import React from 'react';
 import Form from "react-jsonschema-form";
+import { addJob } from '../api/actions';
 
 class PostJob extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       complete: false,
-      error: false, 
+      error: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     let data = event.formData;
-    fetch('http://localhost.stanforddaily.com/wp-json/tsd/v1/jobs/', {
-      "method": "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      "body": JSON.stringify(data)
-    }).then((response) => {
-      if(!response.ok) this.setState({ error: true });
-      else {
-        this.setState({ complete: true });
-      }
-    });
+    try {
+      await addJob(data);
+      this.setState({ complete: true });
+    } catch(e) {
+      console.error(e);
+      this.setState({ error: true });
+    }
     // this.props.history.push('/payment')  // Include if need payment information
   }
 
   render() {
-    if (this.state.complete) return <h3>Thank you! We have received your post, and we will notify you if it's approved.</h3>;
+    if (this.state.complete) return <h3>Thank you! We have received your post, and we will notify you if it's approved. Please contact coo@stanforddaily.com with any further questions.</h3>;
     else if (this.state.error) return <h3>Sorry, there seems to be an error. Please contact coo@stanforddaily.com for help.</h3>;
     let schema = {
       "title": "Create your listing",
@@ -148,7 +144,7 @@ class PostJob extends React.Component {
     return (<div>
       <Form className="postJob" schema={schema} uiSchema={uiSchema} onSubmit={this.handleSubmit}>
         <input type="submit" className="btnSecondary" />
-        </Form>
+      </Form>
     </div>
     );
   }

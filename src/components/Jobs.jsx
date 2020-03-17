@@ -187,12 +187,12 @@ class Jobs extends React.Component {
           <div className="lightTitle">{this.state.filteredItems.length} jobs found</div>
           <ul id="jobList" className="list">
             {this.state.filteredItems.map(job => <JobCard
-              title={job.title}
-              logo={job.logo}
-              company={job.company}
-              location={job.location}
-              excerpt={job.description}
-              type={job.type}
+              title={job.jobTitle}
+              logo={job.companyLogo}
+              company={job.companyName}
+              location={job.jobLocation}
+              excerpt={job.jobDescription}
+              type={job.jobType}
               id={job.id} />
               )}
           </ul>
