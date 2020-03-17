@@ -23,7 +23,9 @@ class Jobs extends React.Component {
       error: null,
       isLoaded: false,
       items: [],
-      filteredItems: []
+      filteredItems: [],
+      type: null,
+      location: null
     };
   }
 
@@ -101,7 +103,7 @@ class Jobs extends React.Component {
     }
 
     // const uniqueIndustries = [...new Set(this.state.items.map(item => item.industry))].sort(); // creates array of unique locations
-    var industryOptions = [];
+    // var industryOptions = [];
     // for (let i = 0; i < uniqueIndustries.length; i++) {  // adds array to object for select options
     //   industryOptions.push({ "value": uniqueIndustries[i], "label": uniqueIndustries[i] });
     // }
@@ -125,7 +127,7 @@ class Jobs extends React.Component {
       />
     </div>);
 
-    const { type, industry, location } = this.state;
+    const { type, location } = this.state;
 
     return (
       <div>
