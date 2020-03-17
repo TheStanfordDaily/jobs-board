@@ -17,7 +17,13 @@ function NavBar({ user }) {
           <li className="leftNav"><Link to="/jobs">Jobs</Link></li>
           {/* <li><a href="/">Email alerts</a></li> */}
           <li><Link to="/advice">Student advice</Link></li>
-          <li><Link to="/post" className="btnSecondary">Post a job</Link></li>
+          <li>
+            <Link to="/post">
+              <button className="btnSecondary">
+                Post a job
+              </button>
+            </Link>
+          </li>
           {
             !user && <li><StanfordLogin><button className="btnSecondary">Stanford Login</button></StanfordLogin></li>
           }
