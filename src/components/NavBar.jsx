@@ -11,11 +11,7 @@ function NavBar({ user }) {
       <nav>
         <Link to="/" className="logo">
           <img src={logoImage} alt="Stanford Daily Logo" />
-          <ul>
-            <li>
-              <div>Job Tree</div>
-            </li>
-          </ul>
+          <div>Job Tree</div>
         </Link>
         <ul>
           <li className="leftNav"><Link to="/jobs">Jobs</Link></li>
@@ -23,7 +19,7 @@ function NavBar({ user }) {
           <li><Link to="/advice">Student advice</Link></li>
           <li><Link to="/post" className="btnSecondary">Post a job</Link></li>
           {
-            !user && <li><StanfordLogin><button className="btnSecondary">Login with Stanford</button></StanfordLogin></li>
+            !user && <li><StanfordLogin><button className="btnSecondary">Stanford Login</button></StanfordLogin></li>
           }
           {
             user && <li><button className="btnSecondary" onClick={() => logout()}>Logout</button></li>

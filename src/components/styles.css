@@ -63,6 +63,7 @@ a.btnPrimary {
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
     cursor: pointer;
+    display: inline-block;
 }
 .btnPrimary:hover {
     border-color: #FF7B7F;
@@ -114,8 +115,8 @@ nav a {
 }
 .logo div {
     float: left;
-    margin-left: 10px;
-    /* margin-top: 10px; */
+    margin-top: 30px;
+    margin-left: 30px;
 }
 .logo ul {
     float: left;
@@ -130,11 +131,13 @@ nav ul {
     padding-left: 0;
 }
 nav ul li {
-    display: inline-block;
-    margin-left: 32px;
+    margin-left: 0;
+    float: left;
     font-size: 14px;
     font-weight: 600;
     line-height: 56px;
+    padding: 0 15px;
+    text-align: center;
 }
 nav .leftNav {
     margin-left: 0;
@@ -516,9 +519,12 @@ legend { /* remove indent of react json form */
     }
     nav ul {
         float: left;
+        margin-bottom: -10px;
     }
     nav ul li {
         line-height: 16px;
+        width: 40%;
+        margin-bottom: 20px;
     }
     .wrapper {
         width: 90%;
