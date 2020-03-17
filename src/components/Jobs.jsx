@@ -36,7 +36,6 @@ class Jobs extends React.Component {
     var filteredItems = [];
     if (!val) { // if an element is unselected (small X), so the value is null...
       filteredItems = this.state.items;
-      console.log("it's this")
     }
     else if (val.length === 0) {  // if all selections are cleared (the big X is clicked)...
       filteredItems = this.state.items; // reset items
@@ -44,7 +43,7 @@ class Jobs extends React.Component {
     else { // else if an element is selected...
       var i;
       const filterFn = (item) => {  // only show items equal to the value passed in
-        return (item.jobLocation === val[i].value) || (item.jobType === val[i].value.toLowerCase());
+        return (item.jobLocation.toLowerCase() === val[i].value.toLowerCase()) || (item.jobType.toLowerCase() === val[i].value.toLowerCase());
       };
       for (i = 0; i < val.length; i++) {
         filteredItems = filteredItems.concat(this.state.items.filter(filterFn));
