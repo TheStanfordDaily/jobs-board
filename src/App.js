@@ -11,11 +11,15 @@ import Advice from './components/Advice';
 import Footer from './components/Footer';
 import Payment from './components/Payment';
 import NotFound from './components/NotFound';
+import Helmet from 'react-helmet';
 
 class App extends Component {
   render() {
     return (
       <div className="flexWrapper">
+        <Helmet>
+          <title>Stanford Daily Jobs Board</title>
+        </Helmet>
       <div className="wrapper">
         <HashRouter>
           <div>
