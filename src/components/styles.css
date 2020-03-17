@@ -18,6 +18,8 @@ body {
     margin: 0;
     padding: 0;
     background-color: white;
+}
+body, button {
     font-family: Source Sans Pro, sans-serif;
 }
 .mainContent {
@@ -55,23 +57,26 @@ a.btnPrimary {
 a.btnPrimary {
     padding: 12px 28px;
 }
-button[type=submit] {
-    margin-top: 16px;
-}
-a.btnPrimary:hover, button[type=submit]:hover {
-    background-color: #FF7B7F;
+.btnPrimary, .btnSecondary {
+    background: none;
+    font-weight: bold;
     transition: all .3s ease;
     -webkit-transition: all .3s ease;
+    cursor: pointer;
+}
+.btnPrimary:hover {
+    border-color: #FF7B7F;
+    color: #FF7B7F;
 }
 .btnSecondary {
     border: 1px solid var(--main-outline);
     padding: 8px 16px;
     border-radius: 5px;
+    font-weight: bold;
 }
 .btnSecondary:hover {
+    color: var(--main-green);
     border-color: var(--main-green);
-    transition: all .2s ease;
-    -webkit-transition: all .2s ease;
 }
 .btnTertiary {
     font-weight: 600;

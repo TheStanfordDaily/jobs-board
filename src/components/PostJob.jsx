@@ -146,7 +146,9 @@ class PostJob extends React.Component {
       },
     }
     return (<div>
-      <Form className="postJob" schema={schema} uiSchema={uiSchema} onSubmit={this.handleSubmit} />
+      <Form className="postJob" schema={schema} uiSchema={uiSchema} onSubmit={this.handleSubmit}>
+        <input type="submit" className="btnSecondary" />
+        </Form>
     </div>
     );
   }
