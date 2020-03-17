@@ -3,6 +3,8 @@ import './styles.css';
 import { Link } from "react-router-dom";
 import heroImage from './heroImage.svg';
 import Stanford from './StanfordOval@2x.png'
+import { getJobs, getArticles } from '../api/actions';
+import { purify } from '../utils/purify';
 
 export default class LandingPage extends React.Component {
   state = {
@@ -14,58 +16,30 @@ export default class LandingPage extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      items: this.props.jobs,
+      jobs: [],
       articles: []
     };
   }
 
 
-  componentDidMount() {
-    /* Pulls jobs from GitHub Jobs API
-    var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-      targetUrl = 'https://jobs.github.com/positions.json?utf8=%E2%9C%93&description=&location=california'
-    fetch(proxyUrl + targetUrl)
-      .then(blob => blob.json())
-      .then(result => {
-        this.setState({
-          isLoaded: true,
-          items: result
-        });
-      },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
-    */
-    var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-      targetUrl = 'https://wp.stanforddaily.com/wp-json/wp/v2/posts?_embed&tags=16534,8248,24207,406,318&per_page=3' // embed adds featured image
-    fetch(proxyUrl + targetUrl)
-      .then(blob => blob.json())
-      .then(result => {
-        this.setState({
-          isLoaded: true,
-          articles: result,
-        });
-      },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      )
+  async componentDidMount() {
+    try {
+      const [jobs, articles] = await Promise.all([getJobs(), getArticles()]);
+      this.setState({
+        isLoaded: true,
+        jobs,
+        articles
+      });
+    } catch (e) {
+      console.error(e);
+      this.setState({
+        isLoaded: true,
+        error: e
+      });
+    }
   }
 
   render() {
-    function html_entity_decode(message) {
-      // decodes UTF8 punctuation into HTML
-      var element = document.createElement("div");
-      element.innerHTML = message;
-      return element.innerHTML;
-    }
     return (
       <div className="home">
         <header>
@@ -78,7 +52,7 @@ export default class LandingPage extends React.Component {
         <div className="newJobs">
           <h3>New positions</h3>
           <div className="mini">
-            {this.state.items.slice(0, 3).map(job =>
+            {this.state.jobs.slice(0, 3).map(job =>
               <Link to={"/jobs/" + job.id}>
                 <div className="title">
                   {job.title}
@@ -102,7 +76,7 @@ export default class LandingPage extends React.Component {
             {this.state.articles.map(article =>
               <a href={article.link}>
                 <div className="title">
-                  {html_entity_decode(article.title.rendered)}
+                  {purify(article.title.rendered)}
                 </div>
                 <div>
                   {article._embedded.author[0].name}
