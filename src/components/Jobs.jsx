@@ -17,10 +17,6 @@ const typeOptions = [
 ];
 
 class Jobs extends React.Component {
-  state = {
-    selectedOption: null,
-  };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -29,10 +25,10 @@ class Jobs extends React.Component {
       items: [],
       filteredItems: []
     };
-    this.handleChange = this.handleChange.bind(this)
   }
 
-  handleChange(val) {
+  handleChange(val, type) {
+    this.setState({[type]: val});
     var filteredItems = [];
     if (!val) { // if an element is unselected (small X), so the value is null...
       filteredItems = this.state.items;
@@ -42,11 +38,15 @@ class Jobs extends React.Component {
     }
     else { // else if an element is selected...
       var i;
-      const filterFn = (item) => {  // only show items equal to the value passed in
-        return (item.jobLocation.toLowerCase() === val[i].value.toLowerCase()) || (item.jobType.toLowerCase() === val[i].value.toLowerCase());
+      const filterFn = (val) => (item) => {  // only show items equal to the value passed in
+        const typeToAttr = {
+          "location": "jobLocation",
+          "type": "jobType"
+        };
+        return item[typeToAttr[type]].toLowerCase() === val[i].value.toLowerCase();
       };
       for (i = 0; i < val.length; i++) {
-        filteredItems = filteredItems.concat(this.state.items.filter(filterFn));
+        filteredItems = filteredItems.concat(this.state.items.filter(filterFn(val)));
       }
     }
     this.setState({ filteredItems: filteredItems });
@@ -94,7 +94,6 @@ class Jobs extends React.Component {
   }
 
   render() {
-    const { selectedOption } = this.state;
     const uniqueLocations = [...new Set(this.state.items.map(item => item.jobLocation))].sort(); // creates array of unique locations
     var locationOptions = [];
     for (let i = 0; i < uniqueLocations.length; i++) {  // adds array to object for select options
@@ -107,16 +106,29 @@ class Jobs extends React.Component {
     //   industryOptions.push({ "value": uniqueIndustries[i], "label": uniqueIndustries[i] });
     // }
 
+    const Filter = ({ placeholder, value, options, label, type }) => (<div>
+      <label>{label}</label>
+      <Select
+        isMulti
+        placeholder={placeholder}
+        onChange={e => this.handleChange(e, type)}
+        options={options}
+        value={value}
+        theme={theme => ({
+          ...theme,
+          colors: {
+            ...theme.colors,
+            primary25: '#9FE5D8',
+            primary: '#11BF9F',
+          },
+        })}
+      />
+    </div>);
+
+    const { type, industry, location } = this.state;
+
     return (
       <div>
-        {/*
-          <header>
-            <img className="hero" src={heroImage} alt="" height="375px" />
-            <h1>Find your dream job and contact recruiters right away.</h1>
-            {/* <HashLink to="/#jobsAnchor" className="btnPrimary">Explore jobs</HashLink>
-            <a href="#" className="btnTertiary">Get alerts</a> 
-          </header>
-          */}
         <div className="sideBar mobile">
           <div className="greenBackground">
             <h1>What's this?</h1>
@@ -127,60 +139,9 @@ class Jobs extends React.Component {
           <div className="jobFilters">
             <input type="search" id="searchInput" onChange={e => this.searchKey(e)} placeholder="Search by title, description, company, etc." name="search" />
             <div className="filter-row">
-              <label>Job types</label>
-              <label>Industries</label>
-              <label>Locations</label>
-            </div>
-            <div className="filter-row">
-              <div>
-                <Select
-                  value={selectedOption} isMulti
-                  placeholder={'All types'}
-                  onChange={this.handleChange}
-                  options={typeOptions}
-                  theme={theme => ({
-                    ...theme,
-                    colors: {
-                      ...theme.colors,
-                      primary25: '#9FE5D8',
-                      primary: '#11BF9F',
-                    },
-                  })}
-                />
-              </div>
-              <div>
-                <Select
-                  value={selectedOption} isMulti
-                  placeholder={'All industries'}
-                  onChange={this.handleChange}
-                  options={industryOptions}
-                  theme={theme => ({
-                    ...theme,
-                    colors: {
-                      ...theme.colors,
-                      primary25: '#9FE5D8',
-                      primary: '#11BF9F',
-                    },
-                  })}
-                />
-              </div>
-              <div>
-                <Select
-                  value={selectedOption} isMulti
-                  placeholder={'All locations'}
-                  onChange={this.handleChange}
-                  options={locationOptions}
-                  theme={theme => ({
-                    ...theme,
-                    colors: {
-                      ...theme.colors,
-                      primary25: '#9FE5D8',
-                      primary: '#11BF9F',
-                    },
-                  })}
-                />
-                {/* <div>{this.state.filter}</div> */}
-              </div>
+              <Filter label="Job types" placeholder="All types" options={typeOptions} value={type} type="type" />
+              {/* <Filter label="Industries" placeholder="All industries" options={industryOptions} value={industry} type="industry" /> */}
+              <Filter label="Locations" placeholder="All locations" options={locationOptions} value={location} type="location" />
             </div>
           </div>
           {this.state.isLoaded &&
@@ -197,7 +158,9 @@ class Jobs extends React.Component {
               location={job.jobLocation}
               excerpt={job.jobDescription}
               type={job.jobType}
-              id={job.id} />
+              id={job.id}
+              key={job.id}
+            />
             )}
           </ul>
         </div>
@@ -236,7 +199,7 @@ function JobCard(props) {
               {props.type}
             </span>
           </div>
-          <div className="jobExcerpt"  dangerouslySetInnerHTML={{__html: purify(props.excerpt)}} />
+          <div className="jobExcerpt" dangerouslySetInnerHTML={{ __html: purify(props.excerpt) }} />
         </Link>
       </li>
     </div>

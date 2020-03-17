@@ -251,10 +251,20 @@ header .btnTertiary {
 }
 .jobFilters .filter-row {
     display: flex;
+    flex-wrap: wrap;
 }
-.jobFilters .filter-row > label, .jobFilters .filter-row > div {
+.jobFilters .filter-row > div {
     flex: 1;
     margin-right: 20px;
+}
+@media only screen and (max-width: 768px){
+    .filter-row {
+        flex-direction: column;
+    }
+    .filter-row > div {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
 }
 .list {
     padding: 0;
