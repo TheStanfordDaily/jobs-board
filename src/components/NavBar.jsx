@@ -2,8 +2,10 @@ import React from 'react';
 import logoImage from './logo.jpg';
 import './styles.css';
 import { Link } from "react-router-dom";
+import StanfordLogin from '../login/StanfordLogin';
+import { logout } from '../login/actions';
 
-function NavBar() {
+function NavBar( {user} ) {
   return (
     <div>
         <nav>
@@ -20,6 +22,12 @@ function NavBar() {
             {/* <li><a href="/">Email alerts</a></li> */}
             <li><Link to="/advice">Student advice</Link></li>
             <li><Link to="/post" className="btnSecondary">Post a job</Link></li>
+            {!user &&
+              <li><StanfordLogin><a className="btnSecondary">Login with Stanford</a></StanfordLogin></li>
+            }
+            {user && 
+              <li><a className="btnSecondary" onClick={() => logout()}>Logout</a></li>
+            }
           </ul>
         </nav>
     </div>

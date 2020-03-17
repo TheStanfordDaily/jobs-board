@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import './index.css';
-import { Switch, HashRouter, Route } from "react-router-dom";import { Elements, StripeProvider } from 'react-stripe-elements';
+import { Switch, HashRouter, Route } from "react-router-dom"; import { Elements, StripeProvider } from 'react-stripe-elements';
 
 import NavBar from './components/NavBar';
 import LandingPage from './components/LandingPage';
@@ -12,18 +12,28 @@ import Footer from './components/Footer';
 import Payment from './components/Payment';
 import NotFound from './components/NotFound';
 import Helmet from 'react-helmet';
+import { checkLoginStatus,parseCodeFromQuery } from './login/actions';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="flexWrapper">
-        <Helmet>
-          <title>Stanford Daily Jobs Board</title>
-        </Helmet>
+const App = () => {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    (async function() {
+      await parseCodeFromQuery();
+      const user = await checkLoginStatus();
+      setUser(user);
+      console.log(user);
+    })();
+    console.log("doing it");
+  }, []);
+  return (
+    <div className="flexWrapper">
+      <Helmet>
+        <title>Stanford Daily Jobs Board</title>
+      </Helmet>
       <div className="wrapper">
         <HashRouter>
           <div>
-            <NavBar />
+            <NavBar user={user} />
             <Switch>
               <Route exact path='/' render={(props) => <LandingPage {...props} jobs={jobs} />} /> />
               <Route exact path='/jobs' render={(props) => <Jobs {...props} jobs={jobs} />} />
@@ -37,10 +47,9 @@ class App extends Component {
         </HashRouter>
         <Footer />
       </div>
-      </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const jobs = [
   {

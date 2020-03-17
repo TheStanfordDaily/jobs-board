@@ -33,7 +33,7 @@ class CheckoutForm extends Component {
 					<label></label><input type="tel" name="phone" placeholder="555-555-5555" required></input>
 					<label>Card information</label>
 					<CardElement />
-					<button type="submit" onClick={this.submit}>Complete Post</button>
+					<button type="submit" className="btnPrimary" onClick={this.submit}>Complete Post</button>
 				</form>
 			</div>
 		);
