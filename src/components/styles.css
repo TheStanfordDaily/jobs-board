@@ -246,12 +246,12 @@ header .btnTertiary {
 .jobFilters {
     margin-bottom: 32px;
 }
-.inline {
-    display: inline-block;
-    width: 32%;
+.jobFilters .filter-row {
+    display: flex;
 }
-.marginRight {
-    margin-right: 2%;
+.jobFilters .filter-row > label, .jobFilters .filter-row > div {
+    flex: 1;
+    margin-right: 20px;
 }
 .list {
     padding: 0;

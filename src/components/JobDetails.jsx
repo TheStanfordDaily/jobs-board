@@ -1,11 +1,12 @@
 import React from 'react';
 import Linkify from 'react-linkify';
-import ReactHtmlParser from 'react-html-parser';
 import './styles.css';
 import locationIcon from './locationIcon.png';
 import buildingIcon from './buildingIcon.png';
 import dollarIcon from './dollarIcon.png';
-import briefcaseIcon from './briefcaseIcon.png';
+// import briefcaseIcon from './briefcaseIcon.png';
+import { getJob } from '../api/actions';
+import { purify } from '../utils/purify';
 
 class JobDetails extends React.Component {
   constructor(props) {
@@ -13,75 +14,65 @@ class JobDetails extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      items: this.props.jobs.filter(job => { // locate details of job with matching ID
-        return job.id === this.props.match.params.id
-      })[0]
+      item: {}
     };
   }
 
-  componentDidMount() {
-    console.log(this.state.items);
-    /* pulls jobs from GitHub Jobs API
-    var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-      targetUrl = 'https://jobs.github.com/positions/' + this.props.match.params.id + '.json?markdown=true';
-    fetch(proxyUrl + targetUrl)
-      .then(blob => blob.json())
-      .then(result => {
-        this.setState({
-          isLoaded: true,
-          items: result,
-        });
-      },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      ) 
-      */
+  async componentDidMount() {
+    try {
+      const job = await getJob(this.props.match.params.id);
+      this.setState({
+        isLoaded: true,
+        item: job
+      });
+    } catch (e) {
+      console.error(e);
+      this.setState({
+        isLoaded: true,
+        error: e
+      });
+    }
   }
 
   render() {
-    var showitems = this.state.items;
-    console.log("items " + showitems);
+    const { item } = this.state;
 
     return (
       <div className="jobDetails">
         <div className="mainContent">
           <div className="companyLogo">
-            <img src={this.state.items.logo} alt="" />
+            <img src={item.companyLogo} alt="" />
           </div>
-          <p className="jobTitle">{this.state.items.title}</p>
+          <p className="jobTitle">{item.jobTitle}</p>
           <div className="jobFacts">
             <div className="leftCol">
               <p>
                 <img src={buildingIcon} alt="" />
-                <a href={this.state.items.company_url}>{this.state.items.company}</a>
+                <a href={item.companySite}>{item.companyName}</a>
               </p>
               <p>
                 <img src={locationIcon} alt="" />
-                {this.state.items.location}
+                {item.jobLocation}
             </p>
             </div>
             <div className="rightCol">
               <p>
                 <img src={dollarIcon} alt="" />
-                {this.state.items.type}
+                {item.jobType}
             </p>
-              <p>
+              {/* <p>
                 <img src={briefcaseIcon} alt="" className="briefcaseIcon"/>
-                {this.state.items.industry}
-            </p>
+                {item.industry}
+            </p> */}
             </div>
             <div className="clear"></div>
           </div>
-        {ReactHtmlParser(this.state.items.description)}
+        <div dangerouslySetInnerHTML={{__html: purify(item.jobDescription)}} />
         </div>
         <div className="sideBar">
           <div className="greenBackground">
             <h1>How to apply</h1>
-            <p><Linkify>{ReactHtmlParser(this.state.items.how_to_apply)}</Linkify></p>
+            <p><Linkify>{item.appInstructions}</Linkify></p>
           </div>
         </div>
         <div className="clear"></div>

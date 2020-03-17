@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "dompurify": "^2.0.8",
+    "fuse.js": "^5.0.3-beta",
     "gh-pages": "^2.0.1",
     "jquery": "^3.4.1",
     "multiselect-dropdown-react": "^1.0.5",
